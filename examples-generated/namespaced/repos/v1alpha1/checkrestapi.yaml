@@ -1,0 +1,116 @@
+apiVersion: repos.azuredevops.m.crossplane.io/v1alpha1
+kind: CheckRestAPI
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/checkrestapi
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    body: '{"params":"value"}'
+    completionEvent: ApiResponse
+    connectedServiceName: ${azuredevops_serviceendpoint_generic.example_azure.service_endpoint_name}
+    connectedServiceNameSelector: connectedServiceName
+    displayName: Example REST API Check
+    headers: '{"contentType":"application/json"}'
+    method: POST
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    retryInterval: 4000
+    successCriteria: eq(root['status'], '200')
+    targetResourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    targetResourceType: endpoint
+    timeout: "40000"
+    urlSuffix: user/1
+    variableGroupNameSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/checkrestapi
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: Example Project
+
+---
+
+apiVersion: serviceendpoint.azuredevops.m.crossplane.io/v1alpha1
+kind: ServiceendpointGeneric
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/checkrestapi
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: Managed by Terraform
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    serverUrl: https://some-server.example.com
+    serviceEndpointName: Example Generic
+    username: username
+
+---
+
+apiVersion: serviceendpoint.azuredevops.m.crossplane.io/v1alpha1
+kind: ServiceendpointGeneric
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/checkrestapi
+  labels:
+    testing.upbound.io/example-name: example_azure
+  name: example-azure
+  namespace: upbound-system
+spec:
+  forProvider:
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    serverUrl: https://dev.azure.com/
+    serviceEndpointName: Example Generic Azure
+    username: username
+
+---
+
+apiVersion: pipelines.azuredevops.m.crossplane.io/v1alpha1
+kind: VariableGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/checkrestapi
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    allowAccess: true
+    name: Example Variable Group
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    variable:
+    - name: FOO
+      value: BAR

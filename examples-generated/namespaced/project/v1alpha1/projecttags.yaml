@@ -1,0 +1,36 @@
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: ProjectTags
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/projecttags
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    tags:
+    - tag1
+    - tag2
+
+---
+
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/projecttags
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile

@@ -1,0 +1,44 @@
+apiVersion: serviceendpoint.azuredevops.m.crossplane.io/v1alpha1
+kind: ServiceendpointOpenshift
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceendpoint/v1alpha1/serviceendpointopenshift
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    acceptUntrustedCerts: true
+    authBasic:
+    - passwordSecretRef:
+        key: example-key
+        name: example-secret
+      usernameSecretRef:
+        key: example-key
+        name: example-secret
+    certificateAuthorityFile: /opt/file
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    serverUrl: https://example.server
+    serviceEndpointName: Example Openshift
+
+---
+
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceendpoint/v1alpha1/serviceendpointopenshift
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile

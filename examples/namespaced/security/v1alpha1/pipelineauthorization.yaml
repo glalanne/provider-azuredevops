@@ -1,0 +1,72 @@
+apiVersion: security.azuredevops.m.crossplane.io/v1alpha1
+kind: PipelineAuthorization
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/pipelineauthorization
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    resourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    type: queue
+
+---
+
+apiVersion: agents.azuredevops.m.crossplane.io/v1alpha1
+kind: AgentPool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/pipelineauthorization
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    autoProvision: false
+    autoUpdate: false
+    name: Example Pool
+
+---
+
+apiVersion: agents.azuredevops.m.crossplane.io/v1alpha1
+kind: AgentQueue
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/pipelineauthorization
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    agentPoolId: ${azuredevops_agent_pool.example.id}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/pipelineauthorization
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile

@@ -1,0 +1,56 @@
+apiVersion: repos.azuredevops.crossplane.io/v1alpha1
+kind: CheckExclusiveLock
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/checkexclusivelock
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    targetResourceIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    targetResourceType: endpoint
+    timeout: 43200
+
+---
+
+apiVersion: project.azuredevops.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/checkexclusivelock
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: Example Project
+
+---
+
+apiVersion: serviceendpoint.azuredevops.crossplane.io/v1alpha1
+kind: ServiceendpointGeneric
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/checkexclusivelock
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Managed by Terraform
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    serverUrl: https://some-server.example.com
+    serviceEndpointName: Example Generic
+    username: username

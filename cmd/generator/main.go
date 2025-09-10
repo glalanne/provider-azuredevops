@@ -12,8 +12,8 @@ import (
 
 	"github.com/alecthomas/kingpin/v2"
 	"github.com/crossplane/upjet/v2/pkg/pipeline"
-	"github.com/microsoft/terraform-provider-azuredevops/azuredevops"
 	"github.com/glalanne/provider-azuredevops/config"
+	"github.com/microsoft/terraform-provider-azuredevops/azuredevops"
 )
 
 func main() {
@@ -26,9 +26,7 @@ func main() {
 		panic(fmt.Sprintf("cannot calculate the absolute path with %s", rootDir))
 	}
 
-	ctx := context.Background()
 	sdkProvider := azuredevops.Provider()
-	kingpin.FatalIfError(err, "Cannot get the Terraform provider")
 
 	pc, err := config.GetProvider(context.Background(), sdkProvider, true)
 	kingpin.FatalIfError(err, "Cannot initialize the cluster-scoped provider configuration")

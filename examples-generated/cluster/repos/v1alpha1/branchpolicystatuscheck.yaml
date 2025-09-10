@@ -1,0 +1,87 @@
+apiVersion: repos.azuredevops.crossplane.io/v1alpha1
+kind: BranchPolicyStatusCheck
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/branchpolicystatuscheck
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    blocking: true
+    enabled: true
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    settings:
+    - applicability: conditional
+      authorIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: example
+      displayName: PreCheck
+      invalidateOnUpdate: true
+      name: Release
+      scope:
+      - matchType: Exact
+        repositoryIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
+        repositoryRefSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
+      - matchType: DefaultBranch
+
+---
+
+apiVersion: repos.azuredevops.crossplane.io/v1alpha1
+kind: GitRepository
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/branchpolicystatuscheck
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    initialization:
+    - initType: Clean
+    name: Example Repository
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/branchpolicystatuscheck
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Managed by Terraform
+    features:
+      artifacts: disabled
+      testplans: disabled
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile
+
+---
+
+apiVersion: security.azuredevops.crossplane.io/v1alpha1
+kind: UserEntitlement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/branchpolicystatuscheck
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    accountLicenseType: basic
+    principalName: mail@email.com

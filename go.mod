@@ -5,7 +5,6 @@ go 1.24.6
 require (
 	dario.cat/mergo v1.0.2
 	github.com/alecthomas/kingpin/v2 v2.4.0
-	github.com/crossplane/crossplane-runtime v1.20.0
 	github.com/crossplane/crossplane-runtime/v2 v2.0.0
 	github.com/crossplane/crossplane-tools v0.0.0-20250731192036-00d407d8b7ec
 	github.com/crossplane/upjet/v2 v2.0.0
@@ -148,3 +147,5 @@ require (
 	sigs.k8s.io/structured-merge-diff/v4 v4.6.0 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )
+
+replace github.com/microsoft/azure-devops-go-api/azuredevops/v7 => github.com/magodo/azure-devops-go-api/azuredevops/v7 v7.0.0-20250711060739-8a0bc4f93533

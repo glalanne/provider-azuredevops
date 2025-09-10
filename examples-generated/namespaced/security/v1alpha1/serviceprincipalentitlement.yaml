@@ -1,0 +1,12 @@
+apiVersion: security.azuredevops.m.crossplane.io/v1alpha1
+kind: ServicePrincipalEntitlement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/serviceprincipalentitlement
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    originId: 00000000-0000-0000-0000-000000000000

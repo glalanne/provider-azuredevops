@@ -1,0 +1,51 @@
+apiVersion: project.azuredevops.crossplane.io/v1alpha1
+kind: WikiPage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/wikipage
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    content: content
+    path: /page
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    wikiIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/wikipage
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project
+
+---
+
+apiVersion: project.azuredevops.crossplane.io/v1alpha1
+kind: Wiki
+metadata:
+  annotations:
+    meta.upbound.io/example-id: project/v1alpha1/wikipage
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: 'Example project wiki '
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    type: projectWiki

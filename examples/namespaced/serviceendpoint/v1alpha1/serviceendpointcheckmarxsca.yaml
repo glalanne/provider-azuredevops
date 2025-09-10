@@ -1,0 +1,42 @@
+apiVersion: serviceendpoint.azuredevops.m.crossplane.io/v1alpha1
+kind: ServiceendpointCheckmarxSca
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceendpoint/v1alpha1/serviceendpointcheckmarxsca
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    accessControlUrl: https://accesscontrol.com
+    account: account
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    serverUrl: https://server.com
+    serviceEndpointName: Example Checkmarx SCA
+    username: username
+    webAppUrl: https://webapp.com
+
+---
+
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceendpoint/v1alpha1/serviceendpointcheckmarxsca
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile

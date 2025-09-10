@@ -1,0 +1,39 @@
+apiVersion: security.azuredevops.m.crossplane.io/v1alpha1
+kind: ProjectPermissions
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/projectpermissions
+  labels:
+    testing.upbound.io/example-name: example-permission
+  name: example-permission
+  namespace: upbound-system
+spec:
+  forProvider:
+    permissions:
+      DELETE: Deny
+      DELETE_TEST_RESULTS: Deny
+      EDIT_BUILD_STATUS: NotSet
+      WORK_ITEM_MOVE: Allow
+    principal: ${data.azuredevops_group.example-readers.id}
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/projectpermissions
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile

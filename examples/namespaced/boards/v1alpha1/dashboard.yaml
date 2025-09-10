@@ -1,0 +1,31 @@
+apiVersion: boards.azuredevops.m.crossplane.io/v1alpha1
+kind: Dashboard
+metadata:
+  annotations:
+    meta.upbound.io/example-id: boards/v1alpha1/dashboard
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: Example dashboard
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: boards/v1alpha1/dashboard
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project

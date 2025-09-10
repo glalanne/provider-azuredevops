@@ -1,0 +1,53 @@
+apiVersion: artifacts.azuredevops.crossplane.io/v1alpha1
+kind: FeedRetentionPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: artifacts/v1alpha1/feedretentionpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    countLimit: 20
+    daysToKeepRecentlyDownloadedPackages: 30
+    feedIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: artifacts.azuredevops.crossplane.io/v1alpha1
+kind: Feed
+metadata:
+  annotations:
+    meta.upbound.io/example-id: artifacts/v1alpha1/feedretentionpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: ExampleFeed
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: artifacts/v1alpha1/feedretentionpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile

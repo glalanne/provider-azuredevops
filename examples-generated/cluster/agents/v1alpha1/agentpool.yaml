@@ -1,0 +1,13 @@
+apiVersion: agents.azuredevops.crossplane.io/v1alpha1
+kind: AgentPool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: agents/v1alpha1/agentpool
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    autoProvision: false
+    autoUpdate: false
+    name: Example-pool

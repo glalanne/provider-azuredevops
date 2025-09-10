@@ -40,7 +40,7 @@ import (
 	authv1 "k8s.io/api/authorization/v1"
 
 	changelogsv1alpha1 "github.com/crossplane/crossplane-runtime/v2/apis/changelogs/proto/v1alpha1"
-	
+
 	"github.com/glalanne/provider-azuredevops/config"
 	"github.com/glalanne/provider-azuredevops/internal/clients"
 	"github.com/glalanne/provider-azuredevops/internal/features"
@@ -54,8 +54,8 @@ import (
 	namespacedcontroller "github.com/glalanne/provider-azuredevops/internal/controller/namespaced"
 
 	resolverapis "github.com/glalanne/provider-azuredevops/internal/apis"
-	"github.com/microsoft/terraform-provider-azuredevops/azuredevops"
 	"github.com/glalanne/provider-azuredevops/internal/version"
+	"github.com/microsoft/terraform-provider-azuredevops/azuredevops"
 )
 
 const (

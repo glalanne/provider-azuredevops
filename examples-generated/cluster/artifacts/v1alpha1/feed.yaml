@@ -1,0 +1,11 @@
+apiVersion: artifacts.azuredevops.crossplane.io/v1alpha1
+kind: Feed
+metadata:
+  annotations:
+    meta.upbound.io/example-id: artifacts/v1alpha1/feed
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: examplefeed

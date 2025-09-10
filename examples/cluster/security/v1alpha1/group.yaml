@@ -1,0 +1,32 @@
+apiVersion: security.azuredevops.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/group
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Example description
+    displayName: Example group
+    members:
+    - ${data.azuredevops_group.example-readers.descriptor}
+    - ${data.azuredevops_group.example-contributors.descriptor}
+    scopeSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/group
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: Example Project

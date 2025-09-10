@@ -1,0 +1,70 @@
+apiVersion: security.azuredevops.crossplane.io/v1alpha1
+kind: SecurityroleAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/securityroleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    identityIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    resourceId: ${format("%s_%s", azuredevops_project.example.id, azuredevops_environment.example.id)}
+    roleName: Administrator
+    scope: distributedtask.environmentreferencerole
+
+---
+
+apiVersion: pipelines.azuredevops.crossplane.io/v1alpha1
+kind: Environment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/securityroleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Example pipeline deployment environment
+    name: Example Environment
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: security.azuredevops.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/securityroleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Description of example group
+    displayName: Example group
+    scopeSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/securityroleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile

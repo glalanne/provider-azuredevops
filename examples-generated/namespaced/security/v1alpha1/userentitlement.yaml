@@ -1,0 +1,12 @@
+apiVersion: security.azuredevops.m.crossplane.io/v1alpha1
+kind: UserEntitlement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/userentitlement
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    principalName: foo@contoso.com

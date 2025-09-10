@@ -1,0 +1,78 @@
+apiVersion: repos.azuredevops.crossplane.io/v1alpha1
+kind: BranchPolicyAutoReviewers
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/branchpolicyautoreviewers
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    blocking: true
+    enabled: true
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    settings:
+    - autoReviewerIdsRefs:
+      - name: example
+      message: Auto reviewer
+      pathFilters:
+      - '*/src/*.ts'
+      scope:
+      - matchType: Exact
+        repositoryIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
+        repositoryRefSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
+      submitterCanVote: false
+
+---
+
+apiVersion: repos.azuredevops.crossplane.io/v1alpha1
+kind: GitRepository
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/branchpolicyautoreviewers
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    initialization:
+    - initType: Clean
+    name: Example Repository
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/branchpolicyautoreviewers
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: Example Project
+
+---
+
+apiVersion: security.azuredevops.crossplane.io/v1alpha1
+kind: UserEntitlement
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/branchpolicyautoreviewers
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    accountLicenseType: basic
+    principalName: mail@email.com

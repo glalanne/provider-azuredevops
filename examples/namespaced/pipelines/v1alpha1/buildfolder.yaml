@@ -1,0 +1,34 @@
+apiVersion: pipelines.azuredevops.m.crossplane.io/v1alpha1
+kind: BuildFolder
+metadata:
+  annotations:
+    meta.upbound.io/example-id: pipelines/v1alpha1/buildfolder
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: ExampleFolder description
+    path: \ExampleFolder
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: pipelines/v1alpha1/buildfolder
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile

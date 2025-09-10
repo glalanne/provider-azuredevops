@@ -1,0 +1,12 @@
+apiVersion: core.azuredevops.crossplane.io/v1alpha1
+kind: Extension
+metadata:
+  annotations:
+    meta.upbound.io/example-id: core/v1alpha1/extension
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    extensionId: extension ID
+    publisherId: publisher ID

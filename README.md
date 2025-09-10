@@ -17,14 +17,12 @@ generation tools and exposes XRM-conformant managed resources for the
 [azuredevops](https://registry.terraform.io/providers/azuredevops/azuredevops/latest/docs).
 
 
-Most of the testing have been done on [Azure azuredevops](https://azure.microsoft.com/en-ca/products/azuredevops)
-
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/glalanne/provider-azuredevops):
 ```
-up ctp provider install glalanne/provider-azuredevops:v0.3.0
+up ctp provider install glalanne/provider-azuredevops:v2.0.0
 ```
 
 Alternatively, you can use declarative installation:
@@ -35,7 +33,7 @@ kind: Provider
 metadata:
   name: provider-azuredevops
 spec:
-  package: glalanne/provider-azuredevops:v0.2.0
+  package: xpkg.upbound.io/lalanne/provider-azuredevops:v2.0.0
 EOF
 ```
 

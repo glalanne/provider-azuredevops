@@ -1,0 +1,40 @@
+apiVersion: serviceendpoint.azuredevops.m.crossplane.io/v1alpha1
+kind: ServiceendpointJfrogPlatformV2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceendpoint/v1alpha1/serviceendpointjfrogplatformv2
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    authenticationToken:
+    - tokenSecretRef:
+        key: example-key
+        name: example-secret
+    description: Managed by Terraform
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    serviceEndpointName: Example Artifactory
+    url: https://artifactory.my.com
+
+---
+
+apiVersion: project.azuredevops.m.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceendpoint/v1alpha1/serviceendpointjfrogplatformv2
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: Managed by Terraform
+    name: Example Project
+    versionControl: Git
+    visibility: private
+    workItemTemplate: Agile
