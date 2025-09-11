@@ -30,21 +30,15 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal azuredevops credentials as JSON"
-	errSubscriptionIDNotSet = "subscription ID must be set in ProviderConfig when credential source is InjectedIdentity, OIDCTokenFile or Upbound"
-	errTenantIDNotSet       = "tenant ID must be set in ProviderConfig when credential source is InjectedIdentity, OIDCTokenFile or Upbound"
-	errClientIDNotSet       = "client ID must be set in ProviderConfig when credential source is OIDCTokenFile or Upbound"
 
-	keyHost                     = "host"
-	keyAzureWorkspaceResourceID = "azure_workspace_resource_id"
-	keyAzureUseMsi              = "azure_use_msi"
-	keyAzureClientID            = "azure_client_id"
-	keyAzureClientSecret        = "azure_client_secret"
-	keyAzureTenantID            = "azure_tenant_id"
-	keyClientID                 = "client_id"
-	keyClientSecret             = "client_secret"
-	keyAccountID                = "account_id"
-	keyAuthType                 = "auth_type"
-	keyAuthToken                = "token"
+	keyHost         = "org_service_url"
+	keyUseMsi       = "use_msi"
+	keyUseOIDC      = "use_oidc"
+	keyOIDCToken    = "oidc_token"
+	keyTenantID     = "tenant_id"
+	keyClientID     = "client_id"
+	keyClientSecret = "client_secret"
+	keyPAT          = "personal_access_token"
 )
 
 // TerraformSetupBuilder returns Terraform setup with provider specific
@@ -87,26 +81,11 @@ func defaultAuth(ctx context.Context, pcSpec *namespacedv1beta1.ProviderConfigSp
 	if v, ok := creds[keyHost]; ok {
 		ps.Configuration[keyHost] = v
 	}
-	if v, ok := creds[keyAzureWorkspaceResourceID]; ok {
-		ps.Configuration[keyAzureWorkspaceResourceID] = v
+	if v, ok := creds[keyUseMsi]; ok {
+		ps.Configuration[keyUseMsi] = v
 	}
-	if v, ok := creds[keyAzureUseMsi]; ok {
-		ps.Configuration[keyAzureUseMsi] = v
-	}
-	if v, ok := creds[keyAzureClientID]; ok {
-		ps.Configuration[keyAzureClientID] = v
-	}
-	if v, ok := creds[keyAzureClientSecret]; ok {
-		ps.Configuration[keyAzureClientSecret] = v
-	}
-	if v, ok := creds[keyAzureTenantID]; ok {
-		ps.Configuration[keyAzureTenantID] = v
-	}
-	if v, ok := creds[keyAuthType]; ok {
-		ps.Configuration[keyAuthType] = v
-	}
-	if v, ok := creds[keyAuthToken]; ok {
-		ps.Configuration[keyAuthToken] = v
+	if v, ok := creds[keyUseOIDC]; ok {
+		ps.Configuration[keyUseOIDC] = v
 	}
 	if v, ok := creds[keyClientID]; ok {
 		ps.Configuration[keyClientID] = v
@@ -114,8 +93,17 @@ func defaultAuth(ctx context.Context, pcSpec *namespacedv1beta1.ProviderConfigSp
 	if v, ok := creds[keyClientSecret]; ok {
 		ps.Configuration[keyClientSecret] = v
 	}
-	if v, ok := creds[keyAccountID]; ok {
-		ps.Configuration[keyAccountID] = v
+	if v, ok := creds[keyTenantID]; ok {
+		ps.Configuration[keyTenantID] = v
+	}
+	if v, ok := creds[keyPAT]; ok {
+		ps.Configuration[keyPAT] = v
+	}
+	if v, ok := creds[keyOIDCToken]; ok {
+		ps.Configuration[keyOIDCToken] = v
+	}
+	if v, ok := creds[keyUseOIDC]; ok {
+		ps.Configuration[keyUseOIDC] = v
 	}
 
 	return nil
