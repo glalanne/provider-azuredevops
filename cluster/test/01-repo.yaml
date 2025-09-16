@@ -1,0 +1,73 @@
+apiVersion: repos.azuredevops.m.crossplane.io/v1alpha1
+kind: GitRepository
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/gitrepository
+  labels:
+    testing.upbound.io/example-name: repo-example
+  name: repo-example
+  namespace: default
+spec:
+  forProvider:
+    defaultBranch: refs/heads/main
+    initialization:
+      initType: Clean
+    name: Example Git Repository
+    projectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: project-example
+
+---
+
+apiVersion: repos.azuredevops.m.crossplane.io/v1alpha1
+kind: GitRepositoryBranch
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/gitrepositorybranch
+  labels:
+    testing.upbound.io/example-name: branch-example
+  name: branch-example
+  namespace: default
+spec:
+  forProvider:
+    name: branch-example
+    refBranch: refs/heads/main
+    repositoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: repo-example
+
+
+---
+
+apiVersion: repos.azuredevops.m.crossplane.io/v1alpha1
+kind: GitRepositoryFile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: repos/v1alpha1/gitrepositoryfile
+  labels:
+    testing.upbound.io/example-name: file-example
+  name: file-example
+  namespace: default
+spec:
+  forProvider:
+    branch: refs/heads/main
+    commitMessage: First commit
+    content: |
+      trigger:
+        branches:
+          include:
+          - main
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      - script: echo Hello, world!
+        displayName: 'Run a one-line script'
+      - script: |
+          echo Add other tasks to build, test, and deploy your project.
+          echo See https://aka.ms/yaml
+        displayName: 'Run a multi-line script'
+    file: azure-pipelines.yml
+    overwriteOnCreate: false
+    repositoryIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: repo-example

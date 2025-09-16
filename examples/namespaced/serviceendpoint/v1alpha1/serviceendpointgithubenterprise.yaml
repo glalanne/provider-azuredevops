@@ -10,7 +10,7 @@ metadata:
 spec:
   forProvider:
     authPersonal:
-    - personalAccessTokenSecretRef:
+      personalAccessTokenSecretRef:
         key: example-key
         name: example-secret
     description: Managed by Terraform

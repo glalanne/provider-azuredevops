@@ -10,7 +10,7 @@ spec:
   forProvider:
     acceptUntrustedCerts: true
     authBasic:
-    - passwordSecretRef:
+      passwordSecretRef:
         key: example-key
         name: example-secret
         namespace: upbound-system

@@ -9,7 +9,7 @@ metadata:
 spec:
   forProvider:
     certificate:
-    - clientCertificatePasswordSecretRef:
+      clientCertificatePasswordSecretRef:
         key: example-key
         name: example-secret
         namespace: upbound-system

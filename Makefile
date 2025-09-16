@@ -3,9 +3,16 @@
 
 PROJECT_NAME ?= provider-azuredevops
 PROJECT_REPO ?= github.com/glalanne/$(PROJECT_NAME)
-UPTEST_INPUT_MANIFESTS ?= "cluster/test/project.yaml,cluster/test/buildfolder.yaml"
-UPTEST_LOCAL_DEPLOY_TARGET ?= local.xpkg.deploy.provider.$(PROJECT_NAME)
+
 CROSSPLANE_CLI_VERSION ?= v2.0.2
+CROSSPLANE_VERSION = 1.16.0
+CROSSPLANE_NAMESPACE = upbound-system
+
+UPTEST_INPUT_MANIFESTS := "$(shell ls -1 cluster/test/*.yaml | tr '\n' ',')"
+UPTEST_LOCAL_DEPLOY_TARGET ?= local.xpkg.deploy.provider.$(PROJECT_NAME)
+UPTEST_SETUP_SCRIPT = cluster/test/setup.sh
+UPTEST_ARGS = --skip-import
+# UPTEST_DATASOURCE_PATH = cluster/test/data.yaml
 
 export TERRAFORM_VERSION ?= 1.5.7
 
@@ -184,20 +191,13 @@ run: go.build
 
 # ====================================================================================
 # End to End Testing
-CROSSPLANE_VERSION = 1.16.0
-CROSSPLANE_NAMESPACE = upbound-system
+
 -include build/makelib/local.xpkg.mk
 -include build/makelib/controlplane.mk
 
+SKIP_DEPLOY_ARGO = true
 -include build/makelib/uptest.mk
 
-UPTEST_SETUP_SCRIPT = cluster/test/setup.sh
-SKIP_DEPLOY_ARGO = true
-UPTEST_ARGS = --skip-import
-# uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
-# 	@$(INFO) running automated tests
-# 	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
-# 	@$(OK) running automated tests
 
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(INFO) running locally built provider

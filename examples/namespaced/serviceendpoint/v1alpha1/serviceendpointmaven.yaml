@@ -10,7 +10,7 @@ metadata:
 spec:
   forProvider:
     authenticationToken:
-    - tokenSecretRef:
+      tokenSecretRef:
         key: example-key
         name: example-secret
     description: Service Endpoint for 'Maven' (Managed by Terraform)

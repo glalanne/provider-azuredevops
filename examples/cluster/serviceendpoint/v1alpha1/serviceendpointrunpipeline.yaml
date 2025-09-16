@@ -9,7 +9,7 @@ metadata:
 spec:
   forProvider:
     authPersonal:
-    - personalAccessTokenSecretRef:
+      personalAccessTokenSecretRef:
         key: example-key
         name: example-secret
         namespace: upbound-system

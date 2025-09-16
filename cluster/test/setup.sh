@@ -5,6 +5,11 @@ echo "Running setup.sh"
 echo "Creating provider credential secret..."
 ${KUBECTL} -n upbound-system create secret generic provider-secret --from-literal=credentials="${PROVIDER_CREDENTIALS}" --dry-run=client -o yaml | ${KUBECTL} apply -f -
 
+
+# echo "Creating Github credential secret..."
+# ${KUBECTL} -n default create secret generic serviceendpointgithub-secret --from-literal=credentials="${GITHUB_CREDENTIALS}" --dry-run=client -o yaml | ${KUBECTL} apply -f -
+
+
 echo "Waiting until provider is healthy..."
 ${KUBECTL} wait provider.pkg --all --for condition=Healthy --timeout 10m
 
@@ -40,3 +45,8 @@ spec:
       name: provider-secret
       namespace: upbound-system
       key: credentials
+EOF
+
+# Just to be sure we start from a clean state
+echo "Cleaning all previous resources from e2e"
+kubectl -n default get $(kubectl api-resources --namespaced=true --no-headers -o name | grep -e ".*.azuredevops.m.crossplane.io" | paste -s -d, - ) --no-headers -o name | xargs -I {} kubectl -n default delete {}

@@ -12,7 +12,7 @@ spec:
     azurermSubscriptionId: 00000000-0000-0000-0000-000000000000
     azurermSubscriptionName: Example Subscription Name
     credentials:
-    - serviceprincipalid: 00000000-0000-0000-0000-000000000000
+      serviceprincipalid: 00000000-0000-0000-0000-000000000000
       serviceprincipalkeySecretRef:
         key: example-key
         name: example-secret
