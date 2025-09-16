@@ -3,7 +3,8 @@
 
 PROJECT_NAME ?= provider-azuredevops
 PROJECT_REPO ?= github.com/glalanne/$(PROJECT_NAME)
-UPTEST_EXAMPLE_LIST ?= "examples/cluster/cluster.yaml"
+UPTEST_INPUT_MANIFESTS ?= "cluster/test/project.yaml,cluster/test/buildfolder.yaml"
+UPTEST_LOCAL_DEPLOY_TARGET ?= local.xpkg.deploy.provider.$(PROJECT_NAME)
 CROSSPLANE_CLI_VERSION ?= v2.0.2
 
 export TERRAFORM_VERSION ?= 1.5.7
@@ -56,10 +57,10 @@ GO_SUBDIRS += cmd internal apis
 # ====================================================================================
 # Setup Kubernetes tools
 
-KIND_VERSION = v0.29.0
+KIND_VERSION = v0.30.0
 UP_VERSION = v0.40.0-0.rc.3
 UP_CHANNEL = alpha
-UPTEST_VERSION = v0.13.0
+UPTEST_VERSION = v1.4.0
 UPTEST_LOCAL_VERSION = v0.13.0
 UPTEST_LOCAL_CHANNEL = stable
 KUSTOMIZE_VERSION = v5.3.0
@@ -70,16 +71,6 @@ export UP_VERSION := $(UP_VERSION)
 export UP_CHANNEL := $(UP_CHANNEL)
 
 -include build/makelib/k8s_tools.mk
-
-# # uptest download and install
-# UPTEST_LOCAL := $(TOOLS_HOST_DIR)/uptest-$(UPTEST_LOCAL_VERSION)
-
-# $(UPTEST_LOCAL):
-# 	@$(INFO) installing uptest $(UPTEST_LOCAL)
-# 	@mkdir -p $(TOOLS_HOST_DIR)
-# 	@curl -fsSLo $(UPTEST_LOCAL) https://s3.us-west-2.amazonaws.com/crossplane.uptest.releases/$(UPTEST_LOCAL_CHANNEL)/$(UPTEST_LOCAL_VERSION)/bin/$(SAFEHOST_PLATFORM)/uptest || $(FAIL)
-# 	@chmod +x $(UPTEST_LOCAL)
-# 	@$(OK) installing uptest $(UPTEST_LOCAL)
 
 # ====================================================================================
 # Setup Images
@@ -198,11 +189,15 @@ CROSSPLANE_NAMESPACE = upbound-system
 -include build/makelib/local.xpkg.mk
 -include build/makelib/controlplane.mk
 
+-include build/makelib/uptest.mk
 
-uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
-	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
-	@$(OK) running automated tests
+UPTEST_SETUP_SCRIPT = cluster/test/setup.sh
+SKIP_DEPLOY_ARGO = true
+UPTEST_ARGS = --skip-import
+# uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
+# 	@$(INFO) running automated tests
+# 	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
+# 	@$(OK) running automated tests
 
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(INFO) running locally built provider

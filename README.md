@@ -1,5 +1,5 @@
 
-# Provider Azure DevOps
+# Crossplane Provider for Microsoft Azure DevOps
 
 <div style="text-align: center;">
 
@@ -11,10 +11,21 @@
 
 </div>
 
-`provider-azuredevops` is a [Crossplane](https://crossplane.io/) provider that
+`provider-azuredevops` is a community [Crossplane](https://crossplane.io/) provider that
 is built using [Upjet](https://github.com/crossplane/upjet) code
 generation tools and exposes XRM-conformant managed resources for the
 [azuredevops](https://registry.terraform.io/providers/azuredevops/azuredevops/latest/docs).
+
+Resources tested:
+- Project
+- Service connection (Github)
+- Build defintion
+- Dashboard
+- Feed
+- Repository
+- Workitem
+- Variable Group
+
 
 
 ## Getting Started
@@ -22,7 +33,7 @@ generation tools and exposes XRM-conformant managed resources for the
 Install the provider by using the following command after changing the image tag
 to the [latest release](https://marketplace.upbound.io/providers/glalanne/provider-azuredevops):
 ```
-up ctp provider install glalanne/provider-azuredevops:v2.0.0
+crossplane xpkg install provider xpkg.crossplane.io/glalanne/provider-azuredevops:v2.0.0
 ```
 
 Alternatively, you can use declarative installation:
@@ -31,13 +42,11 @@ cat <<EOF | kubectl apply -f -
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: provider-azuredevops
+  name: upjet-provider-azuredevops
 spec:
-  package: xpkg.upbound.io/lalanne/provider-azuredevops:v2.0.0
+  package: pkg.crossplane.io/glalanne/provider-azuredevops:v2.0.0
 EOF
 ```
-
-Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
 
 You can see the API reference [here](https://doc.crds.dev/github.com/glalanne/provider-azuredevops).
 
@@ -58,6 +67,12 @@ Run against a Kubernetes cluster:
 ```console
 make run
 ```
+Run unit tests:
+
+```console
+make test
+```
+
 
 Build, push, and install:
 
@@ -69,6 +84,12 @@ Build binary:
 
 ```console
 make build
+```
+
+End to end tests:
+
+```console
+make e2e
 ```
 
 ## Report a Bug
