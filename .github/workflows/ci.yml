@@ -17,7 +17,7 @@ env:
   GOLANGCI_VERSION: 'v1.64.4'
   DOCKER_BUILDX_VERSION: 'v0.20.1'
 
-  CROSSPLANE_REGORG: 'ghcr.io/glalanne' # xpkg.crossplane.io/crossplane-contrib
+  CROSSPLANE_REGORG: 'ghcr.io/software-programmer' # xpkg.crossplane.io/crossplane-contrib
   UPBOUND_REGORG: 'xpkg.upbound.io/glalanne'
 
   # Common users. We can't run a step 'if secrets.XXX != ""' but we can run a

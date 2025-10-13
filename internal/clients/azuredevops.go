@@ -45,8 +45,8 @@ const (
 	keyAccountID                = "account_id"
 	keyAuthType                 = "auth_type"
 	keyAuthToken                = "token"
-	keyTenantID            		= "tenant_id"
-	keyOrganizationURL     		= "org_service_url"
+	keyTenantID                 = "tenant_id"
+	keyOrganizationURL          = "org_service_url"
 )
 
 // TerraformSetupBuilder returns Terraform setup with provider specific
