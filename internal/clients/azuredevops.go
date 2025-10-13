@@ -45,6 +45,8 @@ const (
 	keyAccountID                = "account_id"
 	keyAuthType                 = "auth_type"
 	keyAuthToken                = "token"
+	keyTenantID            		= "tenant_id"
+	keyOrganizationURL     		= "org_service_url"
 )
 
 // TerraformSetupBuilder returns Terraform setup with provider specific
@@ -116,6 +118,12 @@ func defaultAuth(ctx context.Context, pcSpec *namespacedv1beta1.ProviderConfigSp
 	}
 	if v, ok := creds[keyAccountID]; ok {
 		ps.Configuration[keyAccountID] = v
+	}
+	if v, ok := creds[keyTenantID]; ok {
+		ps.Configuration[keyTenantID] = v
+	}
+	if v, ok := creds[keyOrganizationURL]; ok {
+		ps.Configuration[keyOrganizationURL] = v
 	}
 
 	return nil
